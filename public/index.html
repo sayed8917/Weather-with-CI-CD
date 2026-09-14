@@ -164,7 +164,7 @@
 
     .search-box input {
       flex: 1;
-      padding: 14px 20px 14px 46px;
+      padding: 14px 20px;
       border: 1px solid var(--glass-border);
       border-radius: 14px;
       background: var(--glass);
@@ -182,16 +182,6 @@
     }
 
     .search-box input::placeholder { color: var(--text-dim); }
-
-    .search-box .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 18px;
-      color: var(--text-dim);
-      pointer-events: none;
-    }
 
     .search-box button {
       padding: 0 22px;
@@ -628,7 +618,6 @@
     </div>
 
     <div class="search-wrap">
-      <span class="search-icon">🔍</span>
       <div class="search-box">
         <input id="city-input" type="text" placeholder="Search any city..." autocomplete="off" />
         <button id="search-btn">Go</button>
