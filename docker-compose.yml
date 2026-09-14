@@ -3,6 +3,6 @@ services:
     build: .
     container_name: weather-app
     ports:
-      - "9200:9200"
+      - "1500:1500"
     restart: unless-stopped
     

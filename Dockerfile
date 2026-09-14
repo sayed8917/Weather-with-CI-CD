@@ -3,5 +3,5 @@ WORKDIR /app
 COPY package*.json .
 RUN npm ci
 COPY . .
-EXPOSE 9200
+EXPOSE 1500
 CMD ["node", "server.js"]
