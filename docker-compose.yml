@@ -1,0 +1,9 @@
+services:
+  weather-app:
+    build: .
+    container_name: weather-app
+    ports:
+      - "9200:9200"
+    restart: unless-stopped
+    env_file:
+      - .env

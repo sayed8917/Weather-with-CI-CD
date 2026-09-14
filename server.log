@@ -1,0 +1,5 @@
+
+> weather-app@1.0.0 start
+> node server.js
+
+Weather app running on port 9200
