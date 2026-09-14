@@ -13,27 +13,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
 
-      - name: Create build
-        run: |
-          npm ci
-          tar -czf deploy.tar.gz server.js package.json package-lock.json public node_modules
-
-      - name: Copy to server
+      - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASS }}
           port: ${{ secrets.SERVER_PORT }}
-          source: deploy.tar.gz
+          source: "server.js,package.json,package-lock.json,public,Dockerfile,docker-compose.yml,.dockerignore"
           target: ${{ secrets.SERVER_PATH }}
 
-      - name: Restart app
+      - name: Build and run container
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -42,5 +35,5 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             cd ${{ secrets.SERVER_PATH }}
-            tar -xzf deploy.tar.gz
+            docker compose up -d --build
             
