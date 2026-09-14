@@ -37,21 +37,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-
-      - name: Copy files to server
-        uses: appleboy/scp-action@v0.1.7
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASS }}
+          key: ${{ secrets.SERVER_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_PORT }}
-          source: server.js,package.json,package-lock.json,public,Dockerfile,docker-compose.yml,.dockerignore
-          target: ${{ secrets.SERVER_PATH }}
+          script: |
+            set -e
 
-      
-           docker compose up -d --build
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            git fetch origin main
+            git reset --hard origin/main
+
+            docker compose up -d --build
+
             
