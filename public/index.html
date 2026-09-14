@@ -17,14 +17,31 @@
       --text-dim: rgba(255,255,255,0.5);
       --accent: #60a5fa;
       --accent2: #a78bfa;
+      --bg: #0f172a;
+      --card-bg: var(--glass);
+      --hero-temp-gradient: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5));
+    }
+
+    [data-theme="light"] {
+      --glass: rgba(255,255,255,0.7);
+      --glass-border: rgba(0,0,0,0.1);
+      --glass-hover: rgba(255,255,255,0.9);
+      --text: #1e293b;
+      --text-dim: rgba(30,41,59,0.6);
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --bg: #f1f5f9;
+      --card-bg: rgba(255,255,255,0.8);
+      --hero-temp-gradient: linear-gradient(180deg, #1e293b 30%, rgba(30,41,59,0.5));
     }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
       min-height: 100vh;
-      background: #0f172a;
+      background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
     }
 
     body::before {
@@ -37,6 +54,14 @@
         radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.1) 0%, transparent 60%);
       z-index: -1;
       animation: bgShift 20s ease-in-out infinite alternate;
+      transition: opacity 0.3s;
+    }
+
+    [data-theme="light"] body::before {
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59,130,246,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(139,92,246,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(16,185,129,0.08) 0%, transparent 60%);
     }
 
     @keyframes bgShift {
@@ -54,6 +79,29 @@
     .header {
       text-align: center;
       margin-bottom: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      right: 0;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--text);
+      backdrop-filter: blur(20px);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--glass-hover);
+      transform: scale(1.05);
     }
 
     .header h1 {
@@ -138,7 +186,7 @@
       left: 0;
       right: 0;
       list-style: none;
-      background: rgba(15,23,42,0.95);
+      background: var(--card-bg);
       border: 1px solid var(--glass-border);
       border-radius: 14px;
       overflow: hidden;
@@ -277,7 +325,7 @@
       font-size: 84px;
       font-weight: 800;
       line-height: 1;
-      background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5));
+      background: var(--hero-temp-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -295,14 +343,14 @@
     }
 
     .stat {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       border-radius: 14px;
       padding: 14px 16px;
       transition: background 0.2s;
     }
 
-    .stat:hover { background: rgba(255,255,255,0.08); }
+    .stat:hover { background: var(--glass-hover); }
 
     .stat .label {
       font-size: 11px;
@@ -336,25 +384,25 @@
       padding-bottom: 4px;
       scroll-behavior: smooth;
       scrollbar-width: thin;
-      scrollbar-color: rgba(255,255,255,0.2) transparent;
+      scrollbar-color: var(--glass-border) transparent;
     }
 
     .hourly-scroll::-webkit-scrollbar { height: 4px; }
     .hourly-scroll::-webkit-scrollbar-track { background: transparent; }
-    .hourly-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
+    .hourly-scroll::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
 
     .hour-card {
       min-width: 76px;
       text-align: center;
       padding: 14px 10px;
       border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       flex-shrink: 0;
       transition: background 0.2s;
     }
 
-    .hour-card:hover { background: rgba(255,255,255,0.1); }
+    .hour-card:hover { background: var(--glass-hover); }
 
     .hour-card .h-time {
       font-size: 11px;
@@ -387,13 +435,13 @@
       text-align: center;
       padding: 16px 8px;
       border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       transition: background 0.2s, transform 0.2s;
     }
 
     .day-card:hover {
-      background: rgba(255,255,255,0.1);
+      background: var(--glass-hover);
       transform: translateY(-2px);
     }
 
@@ -472,7 +520,7 @@
       height: 12px;
       border-radius: 50%;
       background: #fff;
-      border: 2px solid #0f172a;
+      border: 2px solid var(--bg);
       transform: translateX(-50%);
       transition: left 0.5s ease;
     }
@@ -530,8 +578,11 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Weather Report</h1>
-      <div class="date" id="current-date"></div>
+      <button id="theme-toggle" class="theme-toggle" title="Toggle theme">🌙</button>
+      <div>
+        <h1>Weather Report</h1>
+        <div class="date" id="current-date"></div>
+      </div>
     </div>
 
     <div class="search-wrap">
@@ -635,6 +686,22 @@
   </div>
 
   <script>
+    const themeToggle = document.getElementById('theme-toggle');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+      localStorage.setItem('theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      applyTheme(current);
+    });
+
     const input = document.getElementById('city-input');
     const suggestionsEl = document.getElementById('suggestions');
     const errorEl = document.getElementById('error');
