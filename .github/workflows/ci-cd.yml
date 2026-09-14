@@ -25,7 +25,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: server.js package.json package-lock.json public
+          path: |
+            server.js
+            package.json
+            package-lock.json
+            public
 
   deploy:
     name: Deploy
