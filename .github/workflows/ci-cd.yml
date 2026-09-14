@@ -43,4 +43,4 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_PATH }}
             tar -xzf deploy.tar.gz
-            pm2 restart weather-app || pm2 start server.js --name weather-app
+            
